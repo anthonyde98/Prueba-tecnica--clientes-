@@ -1,0 +1,67 @@
+<section class="container">
+    <div class="title card mx-auto p-3 fit-content">
+        <h2>Listado de clientes</h2>
+    </div>
+    <div class="content card my-5">
+        <div class="card-header p-4">
+            <div class="filter">
+                <div class="input-group me-2">
+                    <span class="input-group-text">Filtrar por: </span>
+                    <select class="form-select" [(ngModel)]="selectedFilterBy" (change)="busqueda(); selectedFilter = ''; busqueda();">
+                        <option *ngFor="let filter of fields" [value]="filter.value">{{ filter.text }}</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <input type="text" *ngIf="selectedFilterBy !== 'birth_date'" class="form-control" placeholder="Buscar un cliente" [(ngModel)]="selectedFilter" (keyup)="busqueda()">
+                    <input type="date" *ngIf="selectedFilterBy === 'birth_date'" class="form-control" [(ngModel)]="selectedFilter" (change)="busqueda()">
+                </div>
+            </div>
+            <div class="order me-2">
+                <div class="input-group me-2">
+                    <span class="input-group-text">Ordenar por: </span>
+                    <select class="form-select" [(ngModel)]="selectedOrderBy" (change)="busqueda()">
+                        <option *ngFor="let order of fields" [value]="order.value">{{ order.text }}</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text">Forma: </span>
+                    <select class="form-select" [(ngModel)]="selectedOrder" (change)="busqueda()">
+                        <option value="asc">Ascendente</option>
+                        <option value="desc">Descendente</option>
+                    </select>
+                </div>
+            </div>
+            <a [routerLink]="['/clientes', 'establecer']" class="btn btn-success"><i class="fad fa-plus me-2"></i>Añadir</a>
+        </div>
+        <div class="card-body">
+            <table *ngIf="clientes.length > 0" class="table table-bordered">
+                <thead class="light">
+                    <tr class="text-center">
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Correo</th>
+                      <th>Teléfono</th>
+                      <th>Documento de identidad</th>
+                      <th>Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="text-center" *ngFor="let cliente of clientes">
+                      <td>{{cliente.name}}</td>
+                      <td>{{cliente.last_name}}</td>
+                      <td>{{cliente.email}}</td>
+                      <td>{{cliente.telephone | phoneFormat}}</td>
+                      <td>{{cliente.identity_document}}</td>
+                      <td class="action">
+                        <a [routerLink]="['/clientes', 'detalles', cliente._id]" class="btn btn-info btn-sm me-1"><i class="fad fa-info"></i></a>
+                        <a [routerLink]="['/clientes', 'establecer']" [queryParams]="{id: cliente._id}" class="btn btn-warning btn-sm me-1"><i class="fad fa-edit"></i></a>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="deleteId = cliente._id"><i class="fad fa-trash-alt"></i></button>
+                      </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 *ngIf="clientes.length === 0" class="text-center text-secondary">No hay clientes para mostrar</h3>
+        </div>
+    </div>
+    <delete-alert *ngIf="deleteId !== ''" [id]="deleteId" (close)="closeAlert($event)"></delete-alert>
+</section>

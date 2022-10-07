@@ -1,0 +1,80 @@
+<section class="container">
+    <div class="title card mx-auto p-3 fit-content">
+        <h2>{{action}} cliente</h2>
+    </div>
+    <div class="formulario-container card mt-5 mb-3 p-3">
+        <form class="formulario" [formGroup]="customerForm" (ngSubmit)="sendFormData()">
+            <div class="sections">
+                <div class="section py-2 px-3 my-3 border rounded">
+                    <div class="into-title my-3">
+                        <h5>Información general</h5>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" [style.color]="estiloInput('name')"><i class="fad fa-address-card"></i></span>
+                        <input type="text" class="form-control" placeholder="Nombre" formControlName="name" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" [style.color]="estiloInput('last_name')"><i class="fad fa-address-card"></i></span>
+                        <input type="text" class="form-control" placeholder="Apellido" formControlName="last_name" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" [style.color]="estiloInput('email')"><i class="fad fa-envelope"></i></span>
+                        <input type="email" class="form-control" placeholder="Correo" formControlName="email" required>
+                    </div>
+                    <label for="birth_date" class="mb-1">Fecha de nacimiento</label>
+                    <div class="input-group mb-3">
+                        <input type="date" class="form-control" formControlName="birth_date" [style.borderColor]="estiloInput('birth_date')" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" [style.color]="estiloInput('telephone')"><i class="fad fa-phone"></i></span>
+                        <input type="tel" class="form-control" placeholder="Teléfono (sin '-', '(', ')', '+' o código de país)" formControlName="telephone" required minlength="10" maxlength="10">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" [style.color]="estiloInput('identity_document')"><i class="fad fa-id-card"></i></span>
+                        <input type="text" class="form-control" placeholder="Documento de identidad (sin '-')" formControlName="identity_document">
+                    </div>
+                </div>
+                <div class="addresses-section border rounded p-2 px-3">
+                    <div class="addresses-title my-1">
+                        <h5>Direcciones</h5>
+                        <button type="button" class="btn btn-success" (click)="addAddress()"><i class="fad fa-plus-square"></i></button>
+                    </div>
+                    <div class="addresses" formArrayName="addresses">
+                        <div class="address section py-2 px-3 my-3 border rounded" *ngFor="let addressFormGroups of addressFormGroups.controls; let i = index" [formGroupName]="i">
+                            <div class="address-title my-1">
+                                <h6>Dirección {{i + 1}}</h6>
+                                <button type="button" class="btn btn-danger btn-small" (click)="deleteAddress(i)"><i class="fad fa-trash"></i></button>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" [style.color]="estiloInput('address.' + i + '.street')"><i class="fad fa-road"></i></span>
+                                <input type="text" class="form-control" placeholder="Calle" formControlName="street">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" ><i class="fad fa-building" [style.color]="estiloInput('address.' + i + '.building')"></i></span>
+                                <input type="tel" class="form-control" placeholder="Edificio/Casa/Apartamento" formControlName="building">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" [style.color]="estiloInput('address.' + i + '.sector')"><i class="fad fa-vector-square"></i></span>
+                                <input type="tel" class="form-control" placeholder="Sector" formControlName="sector">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" [style.color]="estiloInput('address.' + i + '.city')"><i class="fad fa-city"></i></span>
+                                <input type="tel" class="form-control" placeholder="Ciudad" formControlName="city">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" [style.color]="estiloInput('address.' + i + '.municipality')"><i class="fad fa-university"></i></span>
+                                <input type="tel" class="form-control" placeholder="Municipio" formControlName="municipality">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" [style.color]="estiloInput('address.' + i + '.postal_code')"><i class="fad fa-sort-numeric-up-alt"></i></span>
+                                <input type="tel" class="form-control" placeholder="Código postal" formControlName="postal_code">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input [disabled]="customerForm.invalid" type="submit" class="btn btn-success btn-form btn" [value]="action">
+        </form>
+    </div>
+    <a type="button" class="btn btn-light btn-volver mb-4" [routerLink]="['/clientes', 'listado']"><i class="fad fa-arrow-left"></i> Volver</a>
+</section>

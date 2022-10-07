@@ -1,0 +1,68 @@
+<section class="container">
+    <div class="title card mx-auto p-3 fit-content">
+        <h2>Detalles del cliente</h2>
+    </div>
+    <div class="content card my-5" *ngIf="cliente">
+        <div class="section general card mb-3">
+            <div class="card-header">
+                <h5>Información general</h5>
+            </div>
+            <div class="card-body">
+                <div class="dato">
+                    <div class="field-title">Nombre</div><div class="field-value">{{cliente.name}}</div>
+                </div>
+                <div class="dato">
+                    <div class="field-title">Apellido</div><div class="field-value">{{cliente.last_name}}</div>
+                </div>
+                <div class="dato">
+                    <div class="field-title">Correo</div><div class="field-value">{{cliente.email}}</div>
+                </div>
+                <div class="dato">
+                    <div class="field-title">Teléfono</div><div class="field-value">{{cliente.telephone | phoneFormat}}</div>
+                </div>
+                <div class="dato">
+                    <div class="field-title">Documento de identidad</div><div class="field-value">{{cliente.identity_document}}</div>
+                </div>
+                <div class="dato">
+                    <div class="field-title">Fecha de nacimiento</div><div class="field-value">{{cliente.birth_date | date: 'dd/MM/yyyy':'GMT'}}</div>
+                </div>
+                <div class="dato">
+                    <div class="field-title">Estado</div><div class="field-value">{{cliente.status ? "Activo" : "Inactivo"}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="section addresses card">
+            <div class="card-header">
+                <h5>Direcciones</h5>
+            </div>
+            <div class="card-body">
+                <div class="address-data mb-3" *ngFor="let address of cliente.addresses; let i = index">
+                    <div class="address-title">
+                        <h6>Dirección {{i + 1}}</h6>
+                    </div>
+                    <div class="address-info">
+                        <div class="dato">
+                            <div class="field-title">Calle</div><div class="field-value">{{address.street}}</div>
+                        </div>
+                        <div class="dato">
+                            <div class="field-title">Edificio/Casa/Apartamento</div><div class="field-value">{{address.building}}</div>
+                        </div>
+                        <div class="dato">
+                            <div class="field-title">Sector</div><div class="field-value">{{address.sector}}</div>
+                        </div>
+                        <div class="dato">
+                            <div class="field-title">Ciudad</div><div class="field-value">{{address.city}}</div>
+                        </div>
+                        <div class="dato">
+                            <div class="field-title">Municipio</div><div class="field-value">{{address.municipality}}</div>
+                        </div>
+                        <div class="dato">
+                            <div class="field-title">Código postal</div><div class="field-value">{{address.postal_code}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a type="button" class="btn btn-light btn-volver mb-4" [routerLink]="['/clientes', 'listado']"><i class="fad fa-arrow-left"></i> Volver</a>
+</section>
